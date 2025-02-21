@@ -11,14 +11,13 @@ from users.serializers.serializers_roles import RoleSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    role = RoleSerializer(source="role_id", read_only=True)
+    role = RoleSerializer(source="role", read_only=True)
     class Meta:
         model = User
         fields = [
             'name',
             'email',
             'password',
-            'role',
             'role',
             'phone_number',
             'profile_uri',
@@ -40,7 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'password',
-            'role_id',
+            'role',
             'phone_number',
             'profile_uri',
         ]
