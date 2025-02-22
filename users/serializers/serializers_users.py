@@ -11,7 +11,7 @@ from users.serializers.serializers_roles import RoleSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    role = RoleSerializer(source="role", read_only=True)
+    role = RoleSerializer(read_only=True)
     class Meta:
         model = User
         fields = [
