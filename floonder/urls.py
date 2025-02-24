@@ -7,7 +7,7 @@ from spatial_data_services.urls import urlpatterns as gis_urlpatterns
 urlpatterns = [
     path('api', include([
         path('/auth', include([
-            path('', include(auth_urlpatterns)),
+            path('/', include(auth_urlpatterns)),
             path('/register', include(auth_router.urls)),
         ])),
         path('/cms', include([
