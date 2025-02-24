@@ -41,6 +41,7 @@ class IsAdmin(BasePermission):
 
         return request.user.is_admin()
 
+
 class IsMember(BasePermission):
     def has_permission(self, request, view):
         if not request.user.is_authenticated:

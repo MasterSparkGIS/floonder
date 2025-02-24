@@ -16,6 +16,7 @@ from users.models import User
 from users.serializers.serializers_roles import RoleSerializer
 from users.serializers.serializers_users import UserSerializer
 
+
 class UserProfileViewSet(viewsets.ModelViewSet):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -45,6 +46,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             })
 
         return Response(serializer.data)
+
 
 class PublicUserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -311,6 +313,7 @@ class CMSRoleViewSet(viewsets.ModelViewSet):
 
         except Role.DoesNotExist:
             raise NotFound('Role does not exist!')
+
 
 class PublicRoleViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer

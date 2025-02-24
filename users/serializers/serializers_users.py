@@ -1,17 +1,16 @@
 import copy
-import uuid
 from datetime import datetime
 
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from users.models import Role
 from users.models import User
 from users.serializers.serializers_roles import RoleSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
     role = RoleSerializer(read_only=True)
+
     class Meta:
         model = User
         fields = [
@@ -92,6 +91,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_role(self, obj):
         return obj.role
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:

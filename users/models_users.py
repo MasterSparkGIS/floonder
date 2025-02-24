@@ -13,7 +13,6 @@ class User(AbstractBaseUser):
     phone_number = models.CharField(unique=True, max_length=255)
     profile_uri = models.ImageField(upload_to="uploads/user/profile/")
 
-
     active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True, null=True)

@@ -1,19 +1,8 @@
-import _io
-
-from rest_framework.exceptions import AuthenticationFailed, NotFound, PermissionDenied, MethodNotAllowed, \
-    NotAuthenticated, ParseError
-from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
-from rest_framework_simplejwt.views import TokenViewBase
-from rest_framework.response import Response
 from rest_framework import status
-
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 from generic_serializers.serializers import ResponseSerializer, GenericErrorSerializer, ValidationErrorSerializer
-
-from django.db.models import ObjectDoesNotExist
-
-from django.http import Http404
 
 
 def jwt_exception_handler(request, exc):

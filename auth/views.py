@@ -3,13 +3,14 @@ from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from auth.auth import IsMember
+from generic_serializers.serializers import ResponseSerializer
 from users.models import User
 from users.serializers.serializers import UserSerializer
-from generic_serializers.serializers import ResponseSerializer
+
 
 class JWTObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -55,8 +56,10 @@ class JwtObtain(TokenObtainPairView):
 
         return Response(serializer.data)
 
+
 class RefreshToken(TokenRefreshView):
     permission_classes = [AllowAny]
+
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
 
@@ -69,6 +72,7 @@ class RefreshToken(TokenRefreshView):
         })
 
         return Response(serializer.data)
+
 
 class RegisterViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer

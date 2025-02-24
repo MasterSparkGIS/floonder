@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -38,7 +37,8 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now_add=True, null=True)),
                 ('created_by', models.CharField(max_length=255, null=True)),
                 ('updated_by', models.CharField(max_length=255, null=True)),
-                ('role_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.role')),
+                (
+                'role_id', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.role')),
             ],
             options={
                 'abstract': False,

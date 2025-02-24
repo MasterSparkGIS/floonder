@@ -33,3 +33,5 @@ uritemplate==4.1.1
 urllib3==2.3.0
 virtualenv==20.28.1
 whitenoise==6.7.0
+
+djangorestframework-gis~=1.1

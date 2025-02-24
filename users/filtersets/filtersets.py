@@ -1,9 +1,8 @@
 from datetime import datetime
 
+import django_filters
 from django.db.models import Q
 from rest_framework import filters
-
-import django_filters
 
 
 class UserSearchFilter(filters.BaseFilterBackend):
@@ -13,11 +12,13 @@ class UserSearchFilter(filters.BaseFilterBackend):
             queryset = queryset.filter(Q(name__icontains=search_param) | Q(nim__icontains=search_param))
         return queryset
 
+
 class UserFilterSet(django_filters.FilterSet):
     is_active = django_filters.BooleanFilter(field_name='active')
     role = django_filters.CharFilter(field_name='role_id', lookup_expr='exact')
     role_name = django_filters.CharFilter(field_name='role_id__name', lookup_expr='icontains')
     role_name_exact = django_filters.CharFilter(field_name='role_id__name', lookup_expr='exact')
+
 
 class RoleFilterSet(django_filters.FilterSet):
     date_field = django_filters.CharFilter(method='filter_date_field')

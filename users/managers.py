@@ -2,9 +2,8 @@ import uuid
 
 from django.contrib.auth.base_user import BaseUserManager
 
-from returns.result import Result
-
 from .models import Role
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):

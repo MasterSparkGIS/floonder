@@ -1,0 +1,2 @@
+from .models_rainfall import Rainfall
+from .models_administration_region import AdministrationRegion

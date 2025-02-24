@@ -1,9 +1,9 @@
-
 from django.urls import path, include
-from auth.urls import urlpatterns as auth_urlpatterns, router as auth_router
 
-from auth.auth import IsSuperUser, IsAdmin
+from auth.urls import urlpatterns as auth_urlpatterns, router as auth_router
 from users.urls import urlpatterns_cms as users_router_cms, urlpatterns_public as users_router_public
+from spatial_data_services.urls import urlpatterns as gis_urlpatterns
+
 urlpatterns = [
     path('api', include([
         path('/auth', include([
@@ -15,6 +15,7 @@ urlpatterns = [
         ])),
         path('/public', include([
             path('/users', include(users_router_public)),
+            path('/gis', include(gis_urlpatterns)),
         ])),
     ])),
 ]
