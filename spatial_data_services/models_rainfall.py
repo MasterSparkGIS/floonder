@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 
 class Rainfall(models.Model):
     fid = models.IntegerField(null=True, blank=True)
-    feature_id = models.IntegerField(null=True, blank=True)
+
     shape_length = models.FloatField(null=True, blank=True)
     shape_area = models.FloatField(null=True, blank=True)
     gridcode = models.IntegerField(null=True, blank=True)
