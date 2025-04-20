@@ -1,0 +1,23 @@
+[
+  {
+    "model": "users.role",
+    "fields": {
+      "id": "56425bd6-4f82-47de-83f8-5f6b3b155418",
+      "name": "Super User"
+    }
+  },
+  {
+    "model": "users.role",
+    "fields": {
+      "id": "7634cbbd-7c4c-4da6-af74-bc019d48b258",
+      "name": "Admin"
+    }
+  },
+  {
+    "model": "users.role",
+    "fields": {
+      "id": "858533d0-13ac-4c1b-b727-d92b5f99fc91",
+      "name": "User"
+    }
+  }
+]
