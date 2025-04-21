@@ -66,6 +66,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://floonder.kakashispiritnews.my.id",
 ]
 
 CORS_ALLOW_HEADERS = (
