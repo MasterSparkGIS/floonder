@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 
 class FloodPoint(models.Model):
-    id_1 = models.IntegerField(primary_key=True)
+    id_1 = models.IntegerField(null=True, blank=True)
     kdppum = models.CharField(max_length=50, null=True, blank=True)
     namobj = models.CharField(max_length=100)
     remark = models.CharField(max_length=255, null=True, blank=True)

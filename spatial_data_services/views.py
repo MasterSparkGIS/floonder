@@ -407,6 +407,15 @@ class FloodPointViewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
 
+        if self.request.query_params.get('month') is None:
+            get_current_month = pd.to_datetime('now').month
+            month = month_dict.get(get_current_month)
+            queryset = queryset.filter(month=month)
+
+        if self.request.query_params.get('year') is None:
+            get_current_year = pd.to_datetime('now').year
+            queryset = queryset.filter(year=get_current_year)
+
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
