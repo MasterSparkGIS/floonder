@@ -1,7 +1,11 @@
+from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from ..models import River
+from ..models_administration_region import AdministrationRegion
+
 
 class RiverSerializer(GeoFeatureModelSerializer):
+
     class Meta:
         model = River
         geo_field = "geom"

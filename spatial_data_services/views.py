@@ -16,6 +16,7 @@ from common.pagination import GenericPaginator
 from .filtersets.adm_filtersets import AdmFilterSet
 from .filtersets.floodpoint_filtersets import FloodPointFilterset
 from .filtersets.rainfall_filtersets import RainfallFilterSet
+from .filtersets.river_filtersets import RiverFilterset
 from .models import AdministrationRegion
 from generic_serializers.serializers import ResponseSerializer
 from .models_dem import DigitalElevationModel
@@ -154,6 +155,7 @@ class RiverViewSet(viewsets.ModelViewSet):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, KeywordOrderingFilter]
     ordering_fields = ['id']
     ordering = ['id']
+    filterset_class = RiverFilterset
     pagination_class = GenericPaginator
     authentication_classes = []
 
