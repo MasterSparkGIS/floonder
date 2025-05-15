@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import AdministrationRegionViewSet, RainfallViewSet, RiverViewSet, DEMViewSet, LakeViewSet, SlopeViewSet, \
-    PropertyViewSet, FloodPointViewSet
+    PropertyViewSet, FloodPointViewSet, KosanViewSet
 
 urlpatterns = [
     path('/curah-hujan', RainfallViewSet.as_view({'get': 'list'})),
@@ -15,5 +15,9 @@ urlpatterns = [
     })),
     path('/flood-point', FloodPointViewSet.as_view({
         'get': 'list',
+    })),
+    path('/kosan', KosanViewSet.as_view({
+        'get': 'list',
+        'post': 'create',
     })),
 ]

@@ -6,3 +6,4 @@ from .models_river import River
 from .models_lake import Lake
 from .models_floodpoint import FloodPoint
 from .models_property import Property
+from .models_kosan import Kosan

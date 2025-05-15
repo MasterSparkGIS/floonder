@@ -27,7 +27,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def is_superuser(self):
-        return self.role.name == "Superuser"
+        return self.role.name == "Super User"
 
     def is_admin(self):
         return self.role.name == "Admin"
