@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'users',
+    'news',
     'django_filters',
     'django_extensions',
     'spatial_data_services',
