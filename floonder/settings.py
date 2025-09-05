@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://floonder.kakashispiritnews.my.id",
+    "https://floonder.kakashispiritnews.my.id",
     "http://masterpark.mapid.co.id",
     "http://109.123.232.99:8001"
 ]
