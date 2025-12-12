@@ -2,8 +2,8 @@ from django.contrib.gis.db import models
 
 
 class FloodArea(models.Model):
-    desa = models.CharField(max_length=80)
-    kecamatan = models.CharField(max_length=80)
+    desa = models.CharField(max_length=80, null=True)
+    kecamatan = models.CharField(max_length=80, null=True)
 
     area_ha = models.FloatField()
     bulan = models.CharField(max_length=80)
