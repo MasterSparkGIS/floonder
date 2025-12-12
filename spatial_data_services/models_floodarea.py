@@ -20,7 +20,7 @@ class FloodArea(models.Model):
     risk_max = models.FloatField()
     severity = models.CharField(max_length=80)
     risk_class = models.BigIntegerField()
-    high_risk_ = models.FloatField(verbose_name="High Risk Area")
+    high_risk = models.FloatField(verbose_name="High Risk Area", db_column='high_risk_')
     extreme_ar = models.FloatField(verbose_name="Extreme Area")
 
     p_rainfall = models.FloatField()

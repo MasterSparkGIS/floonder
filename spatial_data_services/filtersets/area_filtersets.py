@@ -2,8 +2,8 @@ import django_filters
 from ..models_floodarea import FloodArea
 
 import django_filters
-from .models_flood_area import FloodArea
-from .models import AdministrationRegion # Pastikan import model AdministrationRegion
+from ..models_floodarea import FloodArea
+from ..models_administration_region import AdministrationRegion # Pastikan import model AdministrationRegion
 
 class FloodAreaFilterSet(django_filters.FilterSet):
     # Filter standar

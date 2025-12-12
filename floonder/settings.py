@@ -70,7 +70,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://floonder.kakashispiritnews.my.id",
     "http://masterpark.mapid.co.id",
     "http://109.123.232.99:8001",
-    "https://floonder-gis-app.vercel.app/"
+    "https://floonder-gis-app.vercel.app"
 ]
 
 CORS_ALLOW_HEADERS = (
