@@ -18,12 +18,14 @@ from auth.auth import IsSuperUser
 from common.orderings import KeywordOrderingFilter
 from common.pagination import GenericPaginator
 from .filtersets.adm_filtersets import AdmFilterSet
+from .filtersets.area_filtersets import FloodAreaFilterSet
 from .filtersets.floodpoint_filtersets import FloodPointFilterset
 from .filtersets.rainfall_filtersets import RainfallFilterSet
 from .filtersets.river_filtersets import RiverFilterset
 from .models import AdministrationRegion
 from generic_serializers.serializers import ResponseSerializer
 from .models_dem import DigitalElevationModel
+from .models_floodarea import FloodArea
 from .models_floodpoint import FloodPoint
 from .models_kosan import Kosan
 from .models_lake import Lake
@@ -32,6 +34,7 @@ from .models_rainfall import Rainfall
 from .models_river import River
 from .models_slope import Slope
 from .serializers.serializers_adm import AdministrationRegionSerializer
+from .serializers.serializers_area import FloodAreaSerializer
 from .serializers.serializers_dem import DigitalElevationModelSerializer
 from .serializers.serializers_flood_point import FloodPointSerializer
 from .serializers.serializers_kosan import KosanSerializer
@@ -481,3 +484,61 @@ class KosanViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class FloodAreaViewSet(viewsets.ModelViewSet):
+    serializer_class = FloodAreaSerializer
+    queryset = FloodArea.objects.all()
+    permission_classes = [AllowAny]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, KeywordOrderingFilter]
+    filterset_class = FloodAreaFilterSet
+    ordering_fields = ['id', 'risk_score', 'desa']
+    ordering = ['id']
+    pagination_class = GenericPaginator
+    authentication_classes = []
+
+    def list(self, request, *args, **kwargs):
+        if request.query_params.get('id') is not None:
+            queryset = self.filter_queryset(self.get_queryset())
+            queryset = queryset.filter(id=request.query_params.get('id'))
+            if queryset.count() == 0:
+                raise NotFound('Data not found!')
+            serializer = self.get_serializer(queryset, many=False)
+
+            serializer = ResponseSerializer({
+                'code': 200,
+                'status': 'success',
+                'recordsTotal': queryset.count(),
+                'data': serializer.data,
+                'error': None,
+            })
+
+            return Response(serializer.data)
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if request.query_params.get('bulan') is None:
+            get_current_month = pd.to_datetime('now').month
+            month_name = month_dict.get(get_current_month)
+            queryset = queryset.filter(bulan__iexact=month_name)
+
+        if request.query_params.get('tahun') is None:
+            get_current_year = pd.to_datetime('now').year
+            queryset = queryset.filter(tahun=get_current_year)
+
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        serializer = ResponseSerializer({
+            'code': 200,
+            'status': 'success',
+            'recordsTotal': queryset.count(),
+            'data': serializer.data,
+            'error': None,
+        })
+
+        return Response(serializer.data)
