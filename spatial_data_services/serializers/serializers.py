@@ -6,3 +6,4 @@ from .serializers_flood_point import FloodPointSerializer
 from .serializers_property import PropertySerializer
 from .serializers_dem import DigitalElevationModelSerializer
 from .serializers_slope import SlopeSerializer
+from .serializers_area import FloodAreaSerializer

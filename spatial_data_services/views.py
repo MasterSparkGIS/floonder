@@ -498,29 +498,12 @@ class FloodAreaViewSet(viewsets.ModelViewSet):
     authentication_classes = []
 
     def list(self, request, *args, **kwargs):
-        if request.query_params.get('id') is not None:
-            queryset = self.filter_queryset(self.get_queryset())
-            queryset = queryset.filter(id=request.query_params.get('id'))
-            if queryset.count() == 0:
-                raise NotFound('Data not found!')
-            serializer = self.get_serializer(queryset, many=False)
-
-            serializer = ResponseSerializer({
-                'code': 200,
-                'status': 'success',
-                'recordsTotal': queryset.count(),
-                'data': serializer.data,
-                'error': None,
-            })
-
-            return Response(serializer.data)
-
         queryset = self.filter_queryset(self.get_queryset())
 
         if request.query_params.get('bulan') is None:
             get_current_month = pd.to_datetime('now').month
             month_name = month_dict.get(get_current_month)
-            queryset = queryset.filter(bulan__iexact=month_name)
+            queryset = queryset.filter(bulan__icontains=month_name)
 
         if request.query_params.get('tahun') is None:
             get_current_year = pd.to_datetime('now').year
