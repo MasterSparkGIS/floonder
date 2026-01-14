@@ -59,7 +59,7 @@ class FloodArea(models.Model):
     certainty = models.FloatField(null=True, verbose_name="Certainty")
 
     # Geometry (Wajib untuk GIS models, meskipun tidak ada di list atribut tabel)
-    geom = models.MultiPolygonField(srid=3857)
+    geom = models.MultiPolygonField(srid=4326)
 
     def __str__(self):
         return f"{self.desa} - {self.kecamatan} ({self.bulan} {self.tahun})"
