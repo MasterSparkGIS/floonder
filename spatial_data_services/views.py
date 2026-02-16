@@ -492,7 +492,7 @@ class FloodAreaViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend, KeywordOrderingFilter]
     filterset_class = FloodAreaFilterSet
-    ordering_fields = ['id', 'risk_score', 'desa']
+    ordering_fields = ['id', 'risk_score', 'WADMKD']
     ordering = ['id']
     pagination_class = GenericPaginator
     authentication_classes = []
@@ -502,12 +502,11 @@ class FloodAreaViewSet(viewsets.ModelViewSet):
 
         if request.query_params.get('bulan') is None:
             get_current_month = pd.to_datetime('now').month
-            month_name = month_dict.get(get_current_month)
-            queryset = queryset.filter(bulan__icontains=month_name)
+            queryset = queryset.filter(month=get_current_month)
 
         if request.query_params.get('tahun') is None:
             get_current_year = pd.to_datetime('now').year
-            queryset = queryset.filter(tahun=get_current_year)
+            queryset = queryset.filter(year=get_current_year)
 
         page = self.paginate_queryset(queryset)
 
