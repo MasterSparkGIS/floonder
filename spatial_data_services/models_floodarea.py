@@ -2,71 +2,98 @@ from django.contrib.gis.db import models
 
 
 class FloodArea(models.Model):
-    # Field String (Length 80)
-    desa = models.CharField(max_length=80, null=True)
-    kecamatan = models.CharField(max_length=80, null=True)
-
-    # Field Real (Precision 15)
-    area_ha = models.FloatField()
-
-    # Field String & Integer
-    bulan = models.CharField(max_length=80)
-    tahun = models.BigIntegerField()  # Integer64
+    # Area & Risk Metrics
+    area_ha = models.FloatField(null=True, blank=True, verbose_name="Area (Hectares)")
+    pixel_coun = models.BigIntegerField(null=True, blank=True, verbose_name="Pixel Count")
+    risk_score = models.FloatField(null=True, blank=True, verbose_name="Risk Score")
+    risk_max = models.FloatField(null=True, blank=True, verbose_name="Risk Maximum")
 
     # Percentages (Real)
-    pct_very_l = models.FloatField(verbose_name="Percent Very Low")
-    pct_low = models.FloatField(verbose_name="Percent Low")
-    pct_medium = models.FloatField(verbose_name="Percent Medium")
-    pct_high = models.FloatField(verbose_name="Percent High")
-    pct_very_h = models.FloatField(verbose_name="Percent Very High")
-    pct_extrem = models.FloatField(verbose_name="Percent Extreme")
+    pct_extrem = models.FloatField(null=True, blank=True, verbose_name="Percent Extreme")
+    pct_very_h = models.FloatField(null=True, blank=True, verbose_name="Percent Very High")
+    pct_high = models.FloatField(null=True, blank=True, verbose_name="Percent High")
 
-    # Risk Metrics (Real)
-    risk_score = models.FloatField()
-    risk_max = models.FloatField()
+    # Administrative Fields (dari shapefile Indonesia)
+    KDPPUM = models.CharField(max_length=80, null=True, blank=True)
+    NAMOBJ = models.CharField(max_length=80, null=True, blank=True, verbose_name="Nama Objek")
+    REMARK = models.CharField(max_length=255, null=True, blank=True)
+    KDPBPS = models.CharField(max_length=80, null=True, blank=True)
+    FCODE = models.CharField(max_length=80, null=True, blank=True)
+    LUASWH = models.FloatField(null=True, blank=True, verbose_name="Luas Wilayah")
+    UUPP = models.CharField(max_length=80, null=True, blank=True)
+    SRS_ID = models.CharField(max_length=80, null=True, blank=True)
+    LCODE = models.CharField(max_length=80, null=True, blank=True)
+    METADATA = models.TextField(null=True, blank=True)
 
-    # Perhatikan nama field dengan underscore di akhir sesuai tabel
-    high_risk = models.FloatField(verbose_name="High Risk Area", db_column="high_risk_", null=True)
-    extreme_ar = models.FloatField(verbose_name="Extreme Area")
-    composite = models.FloatField(verbose_name="Composite", db_column="composite_", null=True)  # Field Baru
+    # Kode BPS dan PUM
+    KDEBPS = models.CharField(max_length=80, null=True, blank=True)
+    KDEPUM = models.CharField(max_length=80, null=True, blank=True)
+    KDCBPS = models.CharField(max_length=80, null=True, blank=True)
+    KDCPUM = models.CharField(max_length=80, null=True, blank=True)
+    KDBBPS = models.CharField(max_length=80, null=True, blank=True)
+    KDBPUM = models.CharField(max_length=80, null=True, blank=True)
 
-    # Class & Severity
-    severity = models.CharField(max_length=80)
-    risk_class = models.BigIntegerField()  # Integer64
+    # Wilayah Administratif
+    WADMKD = models.CharField(max_length=80, null=True, blank=True, verbose_name="Wilayah Adm Kelurahan/Desa")
+    WIADKD = models.CharField(max_length=80, null=True, blank=True)
+    WADMKC = models.CharField(max_length=80, null=True, blank=True, verbose_name="Wilayah Adm Kecamatan")
+    WIADKC = models.CharField(max_length=80, null=True, blank=True)
+    WADMKK = models.CharField(max_length=80, null=True, blank=True, verbose_name="Wilayah Adm Kabupaten/Kota")
+    WIADKK = models.CharField(max_length=80, null=True, blank=True)
+    WADMPR = models.CharField(max_length=80, null=True, blank=True, verbose_name="Wilayah Adm Provinsi")
+    WIADPR = models.CharField(max_length=80, null=True, blank=True)
 
-    # P_ Variables (Physical?) - Real
-    p_rainfall = models.FloatField()
-    p_elevatio = models.FloatField(verbose_name="p_elevation")  # Sesuai tabel (terpotong)
-    p_twi = models.FloatField()
-    p_slope = models.FloatField()
-    p_landuse = models.FloatField()
-    p_prox = models.FloatField()
+    TIPADM = models.BigIntegerField(null=True, blank=True, verbose_name="Tipe Administrasi")
 
-    # C_ Variables (Climate?) - Real
-    c_rainfall = models.FloatField()
-    c_elevatio = models.FloatField(verbose_name="c_elevation")  # Sesuai tabel (terpotong)
-    c_twi = models.FloatField()
-    c_slope = models.FloatField()
-    c_landuse = models.FloatField()
-    c_prox = models.FloatField()
+    # Shape Metrics
+    SHAPE_Leng = models.FloatField(null=True, blank=True, verbose_name="Shape Length")
+    SHAPE_Area = models.FloatField(null=True, blank=True, verbose_name="Shape Area")
 
-    # Reason (Updated Length to 231)
-    reason = models.CharField(max_length=231)
+    year = models.IntegerField(null=True, blank=True, verbose_name="Year of Flood Event")
+    month = models.IntegerField(null=True, blank=True, verbose_name="Month of Flood Event")
 
-    # Field Baru sesuai Tabel
-    dominant_f = models.CharField(max_length=80, null=True, verbose_name="Dominant Factor")
-    confidence = models.FloatField(null=True)
-    certainty = models.FloatField(null=True, verbose_name="Certainty")
+    # P_ Variables (Physical Parameters) - Real
+    p_rainfall = models.FloatField(null=True, blank=True, verbose_name="Physical: Rainfall")
+    p_elevatio = models.FloatField(null=True, blank=True, verbose_name="Physical: Elevation")
+    p_slope = models.FloatField(null=True, blank=True, verbose_name="Physical: Slope")
+    p_twi = models.FloatField(null=True, blank=True, verbose_name="Physical: TWI")
+    p_landuse = models.FloatField(null=True, blank=True, verbose_name="Physical: Land Use")
+    p_prox = models.FloatField(null=True, blank=True, verbose_name="Physical: Proximity")
 
-    # Geometry (Wajib untuk GIS models, meskipun tidak ada di list atribut tabel)
+    # C_ Variables (Contribution/Coefficient) - Real
+    c_rainfall = models.FloatField(null=True, blank=True, verbose_name="Contribution: Rainfall")
+    c_elev = models.FloatField(null=True, blank=True, verbose_name="Contribution: Elevation")
+    c_slope = models.FloatField(null=True, blank=True, verbose_name="Contribution: Slope")
+    c_twi = models.FloatField(null=True, blank=True, verbose_name="Contribution: TWI")
+    c_landuse = models.FloatField(null=True, blank=True, verbose_name="Contribution: Land Use")
+    c_prox = models.FloatField(null=True, blank=True, verbose_name="Contribution: Proximity")
+
+    # Risk Classification
+    composite = models.FloatField(null=True, blank=True, verbose_name="Composite Risk", db_column="composite_")
+    severity = models.CharField(max_length=80, null=True, blank=True, verbose_name="Severity Level")
+    reason = models.TextField(null=True, blank=True, verbose_name="Risk Reason")
+
+    # Analysis Metrics
+    dominant = models.CharField(max_length=80, null=True, blank=True, verbose_name="Dominant Factor")
+    conf = models.FloatField(null=True, blank=True, verbose_name="Confidence")
+    cert = models.FloatField(null=True, blank=True, verbose_name="Certainty")
+
+    # Geometry (SRID 4326 untuk WGS84) - NOT NULL karena ini GIS model
     geom = models.MultiPolygonField(srid=4326)
 
     def __str__(self):
-        return f"{self.desa} - {self.kecamatan} ({self.bulan} {self.tahun})"
+        kelurahan = self.WADMKD or self.NAMOBJ or "Unknown"
+        kecamatan = self.WADMKC or "Unknown"
+        severity = self.severity or "N/A"
+        return f"{kelurahan}, {kecamatan} - {severity}"
 
     class Meta:
         verbose_name = "Flood Area"
         verbose_name_plural = "Flood Areas"
-        # Jika tabel ini sudah ada di database (legacy), Anda mungkin perlu:
-        # db_table = 'nama_tabel_di_db'
-        # managed = False
+        db_table = 'spatial_data_services_floodarea'
+        ordering = ['-risk_score']
+        indexes = [
+            models.Index(fields=['WADMKD', 'WADMKC']),
+            models.Index(fields=['severity']),
+            models.Index(fields=['risk_score']),
+        ]
